@@ -1,0 +1,28 @@
+services:
+  postgres:
+    container_name: postgres_container
+    image: "postgres:alpine"
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "8001:5432"
+    volumes:
+      - "postgres_vol:/data"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
+    hostname: "postgres_server"
+  spring-webapp:
+    depends_on:
+      postgres:
+        condition: service_started
+    container_name: spring-webapp-container
+    image: "my-spring-boot-webapp"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "postgres_vol:/spring"
+    build:
+      dockerfile: Dockerfile
+      context: .
+volumes:
+  postgres_vol:
+
