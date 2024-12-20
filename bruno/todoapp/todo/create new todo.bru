@@ -1,0 +1,20 @@
+meta {
+  name: create new todo
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/todo
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "userId": 2,
+    "task": "eat food",
+    "todoStatus": "completed",
+    "todoOrder": 1
+  }
+}
